@@ -6,16 +6,23 @@
 //
 
 import SwiftUI
+import RealityKit
 
-struct ContentView: View {
+struct ContentView : View {
+    @State var arView: ARView = {
+let ar = ARView(frame: .zero)
+do {
+    let resource = try EnvironmentResource.load(named: "prairie")
+    ar.environment.lighting.resource = resource
+} catch {
+    print("Unable to load resource: \(error)")
+}
+        return ar
+    }()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        ARViewContainer(arView: arView)
+            .ignoresSafeArea()
     }
 }
 
