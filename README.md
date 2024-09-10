@@ -2,12 +2,16 @@
 
 Based on example code from https://stackoverflow.com/questions/77332150/realitykit-how-to-disable-default-lighting-in-nonar-arview
 
-
-The initial Xcode project `skyboxSampleRealityKit.xcodeproj`, was built with Xcode 16 beta 5.
 After [posting about this to the Apple developer forums](https://developer.apple.com/forums/thread/762322), I rebuilt the project using Xcode 15.4, which is the project `skyboxExample.xcodeproj`.
 
-The Xcode 15.4 example works perfectly, the Xcode 16 beta 5 project fails to embed the resource in the app.
+When compiled with Xcode 15.4, it works correctly - the sphere showing a reflection of the prarie instead of the default lighting. 
+![output-examples/expected_image.png]
 
-If you build and run skyboxExample.xcodeproj, even with Xcode 16 beta 5, it runs properly, and you see the prarie reflected.
-The project that was initiated with Xcode16 beta5 (same files, etc) - doesn't work as expected.
+However, with Xcode 16beta5, and 16 release candidate, it fails.
+![output-examples/fallthrough_image.png]
 
+Xcode correctly packages the prairie.skybox as an HDR lighting background in the built application, but the frameworks on macOS 16.6.1 (Sonoma) can't load the image. The resource file is embedded, but fails to load with the following error:
+
+```text
+Unable to load resource: Reality File version 11 is not supported. (Latest supported version is 9.)
+```
