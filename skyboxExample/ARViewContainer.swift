@@ -5,27 +5,26 @@
 //  Created by Joseph Heck on 8/19/24.
 //
 
-import SwiftUI
 import RealityKit
+import SwiftUI
 
-struct ARViewContainer : NSViewRepresentable {
+struct ARViewContainer: NSViewRepresentable {
     var arView: ARView
-    
-    func makeNSView(context: Context) -> ARView {
-        
+
+    func makeNSView(context _: Context) -> ARView {
         var sphereMaterial = SimpleMaterial()
         sphereMaterial.roughness = .float(0.0)
         sphereMaterial.metallic = .float(0.3)
 
         let sphereEntity = ModelEntity(mesh: .generateSphere(radius: 0.5),
-                                  materials: [sphereMaterial])
+                                       materials: [sphereMaterial])
 
         let sphereAnchor = AnchorEntity(world: .zero)
         sphereAnchor.addChild(sphereEntity)
         arView.scene.anchors.append(sphereAnchor)
-        
+
         let pointLight = PointLight()
-        pointLight.light.intensity = 50_000
+        pointLight.light.intensity = 50000
         pointLight.light.color = .red
         pointLight.position.z = 2.0
         sphereAnchor.addChild(pointLight)
@@ -33,5 +32,5 @@ struct ARViewContainer : NSViewRepresentable {
         return arView
     }
 
-    func updateNSView(_ view: ARView, context: Context) { }
+    func updateNSView(_: ARView, context _: Context) {}
 }
